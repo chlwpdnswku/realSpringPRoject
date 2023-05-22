@@ -1,8 +1,7 @@
 package com.jeun.domain;
 
 import java.util.Date;
-
-
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,5 +19,8 @@ public class BoardVO {
 	
 	private Date regDate;
 	private Date updateDate;
+	
+	//pagenation
+	private List<TagVO> tags;
 
 }

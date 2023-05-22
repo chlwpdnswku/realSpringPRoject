@@ -23,7 +23,7 @@ public class BoardServiceTests {
 	@Test
 	public void testExist() {
 		System.out.println("paging start");
-		service.getPagingList(new Criteria(1,10)).forEach(vo->System.out.println(vo));
+		service.getListWithPaging(new Criteria(1,10)).forEach(vo->System.out.println(vo));
 	}
 	
 	@Test 

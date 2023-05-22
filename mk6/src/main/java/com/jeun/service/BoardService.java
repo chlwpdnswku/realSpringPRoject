@@ -13,17 +13,15 @@ public interface BoardService {
 	
 	public BoardVO searchPostId(Long id);
 	
-	
-	
 	public boolean insert(BoardVO vo);
 	
 	public boolean update(BoardVO vo);
 	
 	public boolean delete(int id);
 	
-	
+	public int getTotCnt();
 	//paging
-	public List<BoardVO> getPagingList(Criteria cri);
+	public List<BoardVO> getListWithPaging(Criteria cri);
 	
 	
 }

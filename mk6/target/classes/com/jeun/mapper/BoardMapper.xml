@@ -24,13 +24,20 @@
 			jdbcType="TIMESTAMP" javaType="Date" />
 			
 	</resultMap>
-
-
-	<select id="getPostList" resultMap="PostMapping">
-		SELECT * from posts
+	
+	
+	<select id="getTotCnt" resultType="int">
+			SELECT FOUND_ROWS()
 	</select>
 
-	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+	<select id="getPostList" resultMap="PostMapping">
+			select
+			 SQL_CALC_FOUND_ROWS * FROM
+			posts
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.jeun.domain.BoardVO">
 		insert
 		into posts (title,content,author,date_prop)
 		values
@@ -60,11 +67,39 @@
 	
 	<!-- Pagingmapperxml mariadb query-->
 	
-	<select id="getPagingList" resultMap="PostMapping">
-		SELECT * 
+	<select id="getListWithPaging" resultMap="PostMapping">
+		SELECT SQL_CALC_FOUND_ROWS * 
 			FROM posts
 			LIMIT #{offset}, #{amount}
 	</select>
+	
+	<select id="getListWithPagingBySearch" resultMap="PostMapping">
+		SELECT SQL_CALC_FOUND_ROWS p.* 
+		 FROM tbl_tag t ,rel_single_tag r ,posts p
+			WHERE t.word in
+			<trim prefix="(" suffix=")">
+				<foreach collection="list" item="tag" separator=", ">
+					#{tag.word}
+				</foreach>
+			</trim>
+		and t.id = r.tag_id
+		and r.single_id = p.id
+		limit
+		#{cri.offset},#{cri.amount}
+	</select>
+	
+	
+	<!-- public int insertTagRel(@Param("objId") int objId ,@Param("tags") List<TagVO> 
+		list ); -->
+	<insert id="insertTagRel">
+		insert into rel_single_tag (single_id, tag_id)
+		values
+		<foreach collection="tags" item="tag" separator=" , ">
+			(#{objId}
+			,#{tag.id})
+		</foreach>
+		;
+	</insert>
 
 
 </mapper>

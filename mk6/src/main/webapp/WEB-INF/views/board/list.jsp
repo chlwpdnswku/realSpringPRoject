@@ -28,8 +28,8 @@
 						<div class="card-body">${board.content}</div>
 						<div
 							class="card-footer d-flex align-items-center justify-content-between">
-							<a class="small text-white stretched-link"
-								href="/board/showDetail?id=${board.id}">View Details</a>
+							<a id="BoardVO" class="small text-white stretched-link"
+								href="${board.id}">${board.title}</a>
 							<div class="small text-white">
 								<i class="fas fa-angle-right"></i>
 							</div>
@@ -131,9 +131,14 @@
 			    </c:if>
 			  </ul>
 			  
-			  <form id="pagingForm" action="/board/list" method="get">
+			  <form id="searchForm" action="/board/list" method="get">
+			  
+			  	<input type="text" name ="searchWords" placeholder="검색 어 넣 "/>
+						
 			  	<input type="hidden" name="pageNum" value='${pageMake.criPageInfo.pageNum}'/>
 			  	<input type="hidden" name="amount" value='${pageMake.criPageInfo.amount}'/>
+			  	
+			  	<button id="searchButton" class="btn btn-default">Search</button>
 			  </form>
 			  
 		</nav>
@@ -228,6 +233,27 @@
 		$("#registerBtn").on("click", function() {
 			self.location = "/board/boardreg";
 		});
+		
+		$("#searchButton").on("click",function(e){
+			if(!($(this).val())){
+				alert("search");
+				return;
+			}
+			pagingForm.find("input[name='pageNum']").val('1');
+			e.preventDefault();	
+			pagingForm.submit();
+		
+		});	
+		
+		$("#BoardVO").on("click",function(e){
+			e.preventDefault();		
+			//@GetMapping({ "/showDetail", "/updateSingle" }) EL : WAS서버 할때 실행 / 제이쿼리는 브라우저에서 실행해야됨 그래서 꼬인거임 
+			pagingForm.append("<input type='hidden' name='id' value ='"+$(this).attr("href")+"'  >")
+			pagingForm.attr("action","/single/showDetail");
+			pagingForm.submit();
+		
+		});
+		
 		
 		//페이징 네이션 
 		var pagingForm = $("#pagingForm");

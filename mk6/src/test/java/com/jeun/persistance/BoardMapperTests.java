@@ -29,7 +29,7 @@ public class BoardMapperTests {
 	public void testPaginglist() {
 		System.out.println("PagingList");
 		Criteria cri = new Criteria();
-		mapper.getPagingList(cri).forEach(vo->System.out.println(vo));
+		mapper.getListWithPaging(cri).forEach(vo->System.out.println(vo));
 	}
 	
 

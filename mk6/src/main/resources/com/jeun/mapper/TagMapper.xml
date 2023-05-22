@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeun.mapper.TagMapper">
+
+	<!-- 이름을 읽어서 바꿔주는거임 VO가 있으니까 필요함 -->
+	<!-- 결과물이 이객체로 만들거지냐 ? -> 리턴타입에 <>가있으면 resultMap이 필요함 -->
+	<resultMap id="Tag" type="com.jeun.domain.TagVO">
+		<result column="id" property="id" />
+		<result column="word" property="word" jdbcType="VARCHAR"
+			javaType="String" />
+	</resultMap>
+	<!-- 있는단어의 id가 나온다 -->
+	<!-- List<TagVO> getListExist(List<TagVO> listTag); -->
+	<select id="getListExist" resultMap="Tag">
+		select *
+		FROM tbl_tag
+		where word in
+		<!-- ( d,d,f ) 여러건의 데이터를 줄 테니까 여러건으로 처리 -->
+		<foreach collection="list" item="tag" open="(" separator=","
+			close=")">
+			#{tag.word}
+		</foreach>
+	</select>
+	<!-- int insert(List<TagVO> listNew); -->
+	<!-- 오류가나면 위에 http://mybatis.org/dtd/mybatis-3-mapper.dtd 를열엇거 비교 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="java.util.List">
+		insert into tbl_tag(word)
+		values
+		<!-- 한번에병행 처리 할 수 있는 구문 그래서 빠름 mybatis multiple insert auto increment -->
+		<foreach collection="list" item="item" separator=" , ">
+			(#{item.word})
+		</foreach>
+	</insert>
+
+</mapper>

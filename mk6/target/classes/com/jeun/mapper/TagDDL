@@ -1,0 +1,27 @@
+
+CREATE TABLE tbl_tag(
+
+    id INT NOT NULL AUTO_INCREMENT comment '번호',
+	word VARCHAR(100) NOT NULL comment '단어',
+    PRIMARY KEY (id)
+)
+
+insert into tbl_tag (word) values('남자');
+insert into tbl_tag (word) values('여자');
+insert into tbl_tag (word) values('사람');
+insert into tbl_tag (word) values('인간');
+
+
+# 포스트 테그 테이블 
+
+CREATE TABLE rel_single_tag (
+
+    single_id INT NOT NULL,
+    tag_id INT NOT NULL,
+    PRIMARY KEY ( single_id, tag_id )
+)
+
+insert into rel_single_tag (single_id, tag_id) values(3,1);
+insert into rel_single_tag (single_id, tag_id) values(3,3);
+insert into rel_single_tag (single_id, tag_id) values(4,2);
+insert into rel_single_tag (single_id, tag_id) values(4,4);

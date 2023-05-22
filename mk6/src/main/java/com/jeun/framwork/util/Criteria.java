@@ -17,6 +17,11 @@ public class Criteria {
 		this.pageNum = pageNum;
 		this.amount = amount;
 	}
+	
+	//토탈 페이지 구하기 
+	private String searchWords=null;
+	
+	
 	//0~9 . 2페이지 10 부터시작 3페이지 20부터시작 이거자체가 그냥 생성자임 !! 
 	public int getOffset() {
 		return (pageNum-1) * amount;
