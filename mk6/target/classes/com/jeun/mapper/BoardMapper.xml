@@ -25,7 +25,6 @@
 			
 	</resultMap>
 	
-	
 	<select id="getTotCnt" resultType="int">
 			SELECT FOUND_ROWS()
 	</select>

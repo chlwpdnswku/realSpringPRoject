@@ -25,7 +25,7 @@ public interface BoardMapper {
 	//paging
 	public List<BoardVO> getListWithPaging(Criteria cri);
 	
-	public List<BoardVO> getListWithPagingBySearch(Criteria cri,List<TagVO> list);
+	public List<BoardVO> getListWithPagingBySearch(@Param("cri") Criteria cri, @Param("list") List<TagVO> list);
 	
 	//진짜 테그 집어넣기 ?
 	public int insertTagRel(@Param("objId") int objId ,@Param("tags") List<TagVO> list );
